@@ -5,6 +5,8 @@ import io.ktor.response.respond
 import io.ktor.routing.*
 import io.ktor.util.toMap
 import workshopkt.features.calculator.CalculatorService
+import workshopkt.features.lorem.LoremService
+import workshopkt.features.suggestions.SuggestionsService
 
 
 object RoutingModule: ((Application) -> Routing) {
@@ -12,13 +14,14 @@ object RoutingModule: ((Application) -> Routing) {
         .routing {
 
             get("lorem/{quantity?}") {
-                // You can access path parameters using indexing:
-                // call.parameter["someParam"] -> careful! could be null
+                call.respond(mapOf("data" to LoremService.generate(call.parameters["quantity"].orEmpty().toIntOrNull())))
             }
 
             get("suggestions/{hint?}") {
-                // Your code
-            }
+                call.parameters["hint"]
+                    .orEmpty()
+                    .run (SuggestionsService)
+                    .let { call.respond(it) }            }
 
             get("healthCheck") {
                 call.respond(mapOf("status" to "OK"))

@@ -10,3 +10,9 @@ package workshopkt.features.suggestions
         associatedPrototypeId: <array of strings>
     }
  */
+data class Suggestion(
+    val display: String,
+    val highlight: String?,
+    val gid: String,
+    val associatedPrototypeId: List<String>
+)
