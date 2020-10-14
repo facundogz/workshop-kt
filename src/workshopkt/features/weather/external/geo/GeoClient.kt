@@ -6,7 +6,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import okhttp3.Response
 import workshopkt.features.weather.external.geo.GeoSpot.GeoLocation
-import workshopkt.features.weather.external.metilo.MetiloResponse
 import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
