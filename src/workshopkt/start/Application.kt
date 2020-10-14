@@ -1,5 +1,8 @@
 package workshopkt.start
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.routing.*
@@ -7,6 +10,8 @@ import io.ktor.auth.*
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.jackson.jackson
+import org.litote.kmongo.include
+import workshopkt.features.weather.weatherRouting
 
 fun main(args: Array<String>): Unit = io.ktor.server.jetty.EngineMain.main(args)
 
@@ -26,13 +31,15 @@ fun Application.server(testing: Boolean = false) {
     install(Authentication)
 
     install(ContentNegotiation) {
-        jackson {}
+        jackson {
+            setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY)
+            registerModule(JavaTimeModule())
+        }
     }
-
-    val client = HttpClient(OkHttp)
 
     install(Routing) {
         RoutingModule(this@server)
+        weatherRouting()
     }
 }
 
