@@ -1,4 +1,4 @@
-package workshopkt.start
+package weather.start
 
 import io.ktor.application.*
 import io.ktor.features.ContentNegotiation
